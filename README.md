@@ -1,24 +1,27 @@
-# Xpensive Media Portfolio
+# 🚀 Xpensive Media Portfolio
 
 A modern, interactive portfolio website for Xpensive Media, showcasing creative projects, services, and brand identity.
 
-## Table of Contents
-
+## 📔 Table of Contents
 - [Features](#features)
 - [Demo](#demo)
-- [Project Structure](#project-structure)
+- [Folder Structure](#folder-structure)
 - [Tech Stack](#tech-stack)
 - [Setup & Installation](#setup--installation)
+- [Firebase & Supabase Configuration](#firebase--supabase-configuration)
 - [Usage](#usage)
+- [Screenshots](#screenshots)
 - [Services](#services)
 - [Portfolio](#portfolio)
-- [Contributing](#contributing)
+- [Stats](#stats)
+- [Contribute](#contribute)
+- [Acknowledgements](#acknowledgements)
 - [License](#license)
+- [Contact](#contact)
 
 ---
 
-## Features
-
+## ✨ Features
 - Responsive, animated landing page
 - Dynamic portfolio with categorized video and image showcases
 - Services section with detailed cards
@@ -29,22 +32,33 @@ A modern, interactive portfolio website for Xpensive Media, showcasing creative 
 - Integration with Firebase and Supabase for data and media
 - Modern UI with Tailwind CSS, MUI, and custom gradients
 
-## Demo
+## 🌐 Demo
+Live demo: [xpensivemedia.vercel.app] , [https://xpensivemedia.vercel.app]
 
-Live demo: [https://xpensivemedia.vercel.app] , [https://xpensivemedia.vercel.app]
+## ‼️ Folder Structure
+```
+Xpensive Media Portfolio/
+├── public/
+│   ├── CardProject_images/
+│   ├── services-images/
+│   └── ...
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── constants/
+│   ├── Pages/
+│   ├── styles/
+│   ├── firebase.js
+│   ├── supabase.js
+│   └── ...
+├── index.html
+├── package.json
+├── tailwind.config.js
+├── vite.config.js
+└── README.md
+```
 
-## Project Structure
-
-- `src/`
-  - `components/`: Reusable UI components (Navbar, CardProject, Modal, etc.)
-  - `Pages/`: Main pages (Home, About, Services, Portfolio, Contact, Showcase)
-  - `constants/`: Project data and configuration
-  - `assets/`: Images, PDFs, and other static files
-  - `styles/`: Custom CSS
-  - `firebase.js`, `supabase.js`: Backend integrations
-
-## Tech Stack
-
+## ⚙️ Tech Stack
 - React 18
 - Vite
 - Tailwind CSS
@@ -56,36 +70,31 @@ Live demo: [https://xpensivemedia.vercel.app] , [https://xpensivemedia.vercel.ap
 - React Router
 - Styled Components
 
-## Setup & Installation
-
-1. **Clone the repository:**
-   ```
+## 🧰 Setup & Installation
+1. Make sure Git and NodeJS are installed.
+2. Clone this repository:
+   ```bash
    git clone <repo-url>
    cd Xpensive Media Portfolio
    ```
-
-2. **Install dependencies:**
-   ```
+3. Install dependencies:
+   ```bash
    npm install
    ```
-
-3. **Start development server:**
-   ```
+4. Start development server:
+   ```bash
    npm run dev
    ```
-
-4. **Build for production:**
-   ```
+5. Build for production:
+   ```bash
    npm run build
    ```
 
-## Firebase & Supabase Configuration
-
+## 🔑 Firebase & Supabase Configuration
 ### Firebase Setup
-
 1. Go to [Firebase Console](https://console.firebase.google.com/) and create a new project.
-2. In your project, add a web app and copy the Firebase config object.
-3. In your project, create a `.env` file or directly update `src/firebase.js` with your config:
+2. Add a web app and copy the Firebase config object.
+3. Create a `.env` file or update `src/firebase.js`:
    ```js
    // src/firebase.js
    import { initializeApp } from "firebase/app";
@@ -100,13 +109,12 @@ Live demo: [https://xpensivemedia.vercel.app] , [https://xpensivemedia.vercel.ap
    const app = initializeApp(firebaseConfig);
    export default app;
    ```
-4. Replace the placeholder values with your actual Firebase project credentials.
+4. Replace placeholders with your actual Firebase credentials.
 
 ### Supabase Setup
-
 1. Go to [Supabase](https://supabase.com/) and create a new project.
-2. In your Supabase project, go to Project Settings > API and copy your `SUPABASE_URL` and `SUPABASE_KEY`.
-3. In your project, create a `.env` file or directly update `src/supabase.js`:
+2. Copy your `SUPABASE_URL` and `SUPABASE_KEY` from Project Settings > API.
+3. Create a `.env` file or update `src/supabase.js`:
    ```js
    // src/supabase.js
    import { createClient } from '@supabase/supabase-js';
@@ -114,19 +122,24 @@ Live demo: [https://xpensivemedia.vercel.app] , [https://xpensivemedia.vercel.ap
    const supabaseKey = "YOUR_SUPABASE_KEY";
    export const supabase = createClient(supabaseUrl, supabaseKey);
    ```
-4. Replace the placeholder values with your actual Supabase credentials.
+4. Replace placeholders with your actual Supabase credentials.
 
 > For security, use environment variables and never commit your keys to public repositories.
 
-## Usage
-
+## 💻 Usage
 - Visit the homepage for an animated introduction.
 - Explore the About, Services, Portfolio, and Contact pages.
 - Portfolio section displays categorized video/image projects.
 - Services section highlights offerings with images and descriptions.
 
-## Services
+## 📷 Screenshots
+> Add your screenshots here!
+- ![Animated Home Page](public/screenshots/home.png)
+- ![Modern About Page](public/screenshots/about.png)
+- ![Showcase your projects](public/screenshots/works.png)
+- ![Functional Contact form](public/screenshots/contact.png)
 
+## 🛠️ Services
 - Corporate Events
 - Bars & Restaurants
 - Real Estate
@@ -136,32 +149,46 @@ Live demo: [https://xpensivemedia.vercel.app] , [https://xpensivemedia.vercel.ap
 - Influencer Marketing
 - Podcast Production
 
-## Portfolio
-
+## 🎬 Portfolio
 Sample projects include:
 - Logo Reveal Animation
 - Car Delivery Video Edit
 - Podcast Reel Sample
-
 See `src/constants/projects.js` for more.
 
-## Contributing
+## 🔧 Stats
+- [PageSpeed Insights - Vercel](https://pagespeed.web.dev/analysis?url=https://xpensivemedia.vercel.app)
+- [PageSpeed Insights - Netlify](https://pagespeed.web.dev/analysis?url=https://gurudeepv-portfolio.netlify.app)
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+## 🙌 Contribute
+You might encounter some bugs while using this app. You are more than welcome to contribute. Just submit changes via pull request and I will review them before merging. Make sure you follow community guidelines.
 
-## License
+## 💎 Acknowledgements
+- [framer-motion](https://www.npmjs.com/package/framer-motion)
+- [react](https://www.npmjs.com/package/react)
+- [react-dom](https://www.npmjs.com/package/react-dom)
+- [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+- [tailwindcss](https://www.npmjs.com/package/tailwindcss)
+- [vite](https://www.npmjs.com/package/vite)
+- [supabase](https://www.npmjs.com/package/@supabase/supabase-js)
+- [firebase](https://www.npmjs.com/package/firebase)
+- [mui](https://mui.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
 
-This project is [MIT](LICENSE) licensed.
+## © License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Contact
+## 📬 Contact
 - Gurudeep V
 - [Portfolio Website](https://xpensivemedia.vercel.app)
 - [Email](mailto:xpensivemedia.co@gmail.com)
 
+---
 
-! **Readme by DEEPS** !
+> **Readme by DEEPS**
 
-To edit Download CV and View projects - first you need to import the file to src>assets>file. goto About.jsx and in line 261 you can find //make sure to change the name at 14 line import ResumePDF from '../assets/Gurudeep V Resume.pdf';
+To edit Download CV and View projects - first you need to import the file to src/assets/file. Go to About.jsx and in line 261 you can find:
+// make sure to change the name at line 14: import ResumePDF from '../assets/Gurudeep V Resume.pdf';
 
-To edit TOTAL PROJECTS, HAPPY CLIENTS, YEARS OF EXPERIENCE data - goto to About.jsx and in line 195 you will find it . Total project automatic count is set to 50+ , you can change to automatic by replacing 50+ to totalProjects in line 201 , value: "50+", to value: totalProjects,
+To edit TOTAL PROJECTS, HAPPY CLIENTS, YEARS OF EXPERIENCE data - go to About.jsx and in line 195 you will find it. Total project automatic count is set to 50+, you can change to automatic by replacing 50+ to totalProjects in line 201: value: "50+", to value: totalProjects,
 
