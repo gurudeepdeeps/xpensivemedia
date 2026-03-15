@@ -125,7 +125,7 @@ const Navbar = () => {
                         Xpensive Media
                     </a>
                 </div>
-    
+
                 {/* Desktop Navigation */}
                 <div className="hidden md:block">
                     <div className="ml-8 flex items-center space-x-8">
@@ -189,9 +189,9 @@ const Navbar = () => {
                         })}
                     </div>
                 </div>
-    
-                {/* Mobile Menu Button */}
-                <div className="md:hidden">
+
+                {/* Mobile Menu Button - move to right */}
+                <div className="md:hidden ml-auto flex items-center justify-end">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className={`relative p-2 text-[#e2d3fd] hover:text-white transition-transform duration-300 ease-in-out transform ${
