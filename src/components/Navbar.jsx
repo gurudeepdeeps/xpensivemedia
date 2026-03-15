@@ -212,35 +212,51 @@ const Navbar = () => {
         <div
             className={`md:hidden fixed left-0 right-0 top-16 transition-all duration-300 ease-in-out z-50 ${
                 isOpen
-                    ? "opacity-100 translate-y-0 h-[60vh] bg-[#030014]"
+                    ? "opacity-100 translate-y-0 h-[85vh] bg-[#030014]/90"
                     : "opacity-0 -translate-y-[-100%] h-0 pointer-events-none bg-transparent"
             }`}
-            style={{ borderBottomLeftRadius: '1rem', borderBottomRightRadius: '1rem', boxShadow: isOpen ? '0 8px 32px rgba(99,102,241,0.15)' : 'none', backgroundColor: isOpen ? '#030014' : 'transparent' }}
+            style={{ borderBottomLeftRadius: '1rem', borderBottomRightRadius: '1rem', boxShadow: isOpen ? '0 8px 32px rgba(99,102,241,0.15)' : 'none', backgroundColor: isOpen ? 'rgba(3,0,20,0.90)' : 'transparent' }}
         >
             <div className="flex flex-col h-full justify-start items-center">
-                <div className="w-full px-6 py-8 space-y-6">
-                    {navItems.map((item, index) => {
-                        const isHash = item.href.startsWith('#');
-                        // Fix: For Contact, ensure activeSection matches 'Contact' and pathname is '/'
-                        let isActive = false;
-                        if (isHash) {
-                            isActive = (location.pathname === '/' && activeSection === item.href.substring(1));
-                            // Special handling for Contact
-                            if (item.label === 'Contact' && location.pathname === '/' && activeSection === 'Contact') {
-                                isActive = true;
+                <div className="w-full px-6 pt-2 pb-8 space-y-6">
+                    <div className="flex flex-col items-end space-y-6 pr-0 mt-0">
+                        {navItems.map((item, index) => {
+                            const isHash = item.href.startsWith('#');
+                            let isActive = false;
+                            if (isHash) {
+                                isActive = (location.pathname === '/' && activeSection === item.href.substring(1));
+                                if (item.label === 'Contact' && location.pathname === '/' && activeSection === 'Contact') {
+                                    isActive = true;
+                                }
+                            } else {
+                                isActive = location.pathname === item.href;
                             }
-                        } else {
-                            isActive = location.pathname === item.href;
-                        }
 
-                        const commonClass = `block px-4 py-4 text-xl font-semibold transition-all duration-300 rounded-lg ${isActive ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent" : "text-[#e2d3fd] hover:text-white"}`;
+                            const commonClass = `block px-4 py-4 text-xl font-semibold transition-all duration-300 rounded-lg text-right ${isActive ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent" : "text-[#e2d3fd] hover:text-white"}`;
 
-                        if (isHash) {
+                            if (isHash) {
+                                return (
+                                    <a
+                                        key={item.label}
+                                        href={item.href}
+                                        onClick={(e) => scrollToSection(e, item.href)}
+                                        className={commonClass}
+                                        style={{
+                                            transitionDelay: `${index * 80}ms`,
+                                            transform: isOpen ? "translateY(0)" : "translateY(40px)",
+                                            opacity: isOpen ? 1 : 0,
+                                        }}
+                                    >
+                                        <span>{item.label}</span>
+                                    </a>
+                                );
+                            }
+
                             return (
-                                <a
+                                <Link
                                     key={item.label}
-                                    href={item.href}
-                                    onClick={(e) => scrollToSection(e, item.href)}
+                                    to={item.href}
+                                    onClick={() => setIsOpen(false)}
                                     className={commonClass}
                                     style={{
                                         transitionDelay: `${index * 80}ms`,
@@ -248,27 +264,11 @@ const Navbar = () => {
                                         opacity: isOpen ? 1 : 0,
                                     }}
                                 >
-                                    {item.label}
-                                </a>
+                                    <span>{item.label}</span>
+                                </Link>
                             );
-                        }
-
-                        return (
-                            <Link
-                                key={item.label}
-                                to={item.href}
-                                onClick={() => setIsOpen(false)}
-                                className={commonClass}
-                                style={{
-                                    transitionDelay: `${index * 80}ms`,
-                                    transform: isOpen ? "translateY(0)" : "translateY(40px)",
-                                    opacity: isOpen ? 1 : 0,
-                                }}
-                            >
-                                {item.label}
-                            </Link>
-                        );
-                    })}
+                        })}
+                    </div>
                 </div>
             </div>
         </div>
