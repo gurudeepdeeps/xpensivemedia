@@ -195,20 +195,41 @@ const Navbar = () => {
                         className={`relative p-2 text-[#e2d3fd] hover:text-white transition-transform duration-300 ease-in-out transform ${
                             isOpen ? "rotate-90 scale-125" : "rotate-0 scale-100"
                         }`}
+                        aria-label={isOpen ? "Close menu" : "Open menu"}
                     >
-                        {/* Hamburger icon or menu icon can go here */}
+                        {isOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
-                    <div>
-                        {navItems.map((item) => {
-                            const isHash = item.href.startsWith('#');
-                            const isActive = isHash ? (location.pathname === '/' && activeSection === item.href.substring(1)) : location.pathname === item.href;
-                            if (isHash) {
+                    {isOpen && (
+                        <div className="absolute top-16 right-0 w-50 max-w-[90vw] bg-[#030014] flex flex-col items-end z-50 shadow-lg">
+                            {navItems.map((item) => {
+                                const isHash = item.href.startsWith('#');
+                                const isActive = isHash ? (location.pathname === '/' && activeSection === item.href.substring(1)) : location.pathname === item.href;
+                                if (isHash) {
+                                    return (
+                                        <a
+                                            key={item.label}
+                                            href={item.href}
+                                            onClick={(e) => scrollToSection(e, item.href)}
+                                            className="group relative px-4 py-3 text-base font-medium w-full text-right border-b border-[#6366f1]/20"
+                                        >
+                                            <span
+                                                className={`relative z-10 transition-colors duration-300 ${
+                                                    isActive
+                                                        ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent font-semibold"
+                                                        : "text-[#e2d3fd] group-hover:text-white"
+                                                }`}
+                                            >
+                                                {item.label}
+                                            </span>
+                                        </a>
+                                    );
+                                }
                                 return (
-                                    <a
+                                    <Link
                                         key={item.label}
-                                        href={item.href}
-                                        onClick={(e) => scrollToSection(e, item.href)}
-                                        className="group relative px-1 py-2 text-sm font-medium"
+                                        to={item.href}
+                                        onClick={() => setIsOpen(false)}
+                                        className="group relative px-4 py-3 text-base font-medium w-full text-right border-b border-[#6366f1]/20"
                                     >
                                         <span
                                             className={`relative z-10 transition-colors duration-300 ${
@@ -219,43 +240,11 @@ const Navbar = () => {
                                         >
                                             {item.label}
                                         </span>
-                                        <span
-                                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] transform origin-left transition-transform duration-300 ${
-                                                isActive
-                                                    ? "scale-x-100"
-                                                    : "scale-x-0 group-hover:scale-x-100"
-                                            }`}
-                                        ></span>
-                                    </a>
+                                    </Link>
                                 );
-                            }
-                            return (
-                                <Link
-                                    key={item.label}
-                                    to={item.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className="group relative px-1 py-2 text-sm font-medium"
-                                >
-                                    <span
-                                        className={`relative z-10 transition-colors duration-300 ${
-                                            isActive
-                                                ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent font-semibold"
-                                                : "text-[#e2d3fd] group-hover:text-white"
-                                        }`}
-                                    >
-                                        {item.label}
-                                    </span>
-                                    <span
-                                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] transform origin-left transition-transform duration-300 ${
-                                            isActive
-                                                ? "scale-x-100"
-                                                : "scale-x-0 group-hover:scale-x-100"
-                                        }`}
-                                    ></span>
-                                </Link>
-                            );
-                        })}
-                    </div>
+                            })}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
