@@ -1,4 +1,5 @@
 import { useState, useEffect, memo } from "react";
+import SocialFloat from '../components/SocialFloat';
 import PropTypes from 'prop-types';
 import {
   Github,
@@ -292,6 +293,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <SocialFloat />
     </div>
   );
 };
