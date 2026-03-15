@@ -210,12 +210,12 @@ const Navbar = () => {
     
         {/* Mobile Menu Overlay */}
         <div
-            className={`md:hidden fixed left-0 right-0 top-16 bg-[#030014] transition-all duration-300 ease-in-out z-50 ${
+            className={`md:hidden fixed left-0 right-0 top-16 transition-all duration-300 ease-in-out z-50 ${
                 isOpen
-                    ? "opacity-100 translate-y-0 h-[60vh]"
-                    : "opacity-0 -translate-y-[-100%] h-0 pointer-events-none"
+                    ? "opacity-100 translate-y-0 h-[60vh] bg-[#030014]"
+                    : "opacity-0 -translate-y-[-100%] h-0 pointer-events-none bg-transparent"
             }`}
-            style={{ borderBottomLeftRadius: '1rem', borderBottomRightRadius: '1rem', boxShadow: isOpen ? '0 8px 32px rgba(99,102,241,0.15)' : 'none' }}
+            style={{ borderBottomLeftRadius: '1rem', borderBottomRightRadius: '1rem', boxShadow: isOpen ? '0 8px 32px rgba(99,102,241,0.15)' : 'none', backgroundColor: isOpen ? '#030014' : 'transparent' }}
         >
             <div className="flex flex-col h-full justify-start items-center">
                 <div className="w-full px-6 py-8 space-y-6">
