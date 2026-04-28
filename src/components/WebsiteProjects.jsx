@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Slider from 'react-slick';
 import { getSupabaseImageUrl } from '../utils/supabaseImages';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 const projects = [
   {
@@ -52,134 +49,107 @@ const projects = [
 
 const WebsiteProjects = () => {
   const [loadedImages, setLoadedImages] = useState({});
+  const sliderRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  React.useEffect(() => {
+    const updateViewport = () => setIsMobile(window.innerWidth <= 768);
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
+  }, []);
 
   const handleImageLoaded = (id) => {
     setLoadedImages((prev) => ({ ...prev, [id]: true }));
   };
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    appendDots: dots => (
-      <div className="slider-dots" style={{ marginTop: 16 }}>
-        {dots}
-      </div>
-    ),
-    customPaging: () => (
-      <button type="button" className="website-dot" />
-    ),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        }
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 1,
-        }
-      }
-    ]
-  };
+  const goNext = useCallback(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+    el.scrollBy({ left: Math.round(el.clientWidth * 0.86), behavior: 'smooth' });
+  }, []);
 
-  const PrevArrow = ({ className, style, onClick }) => (
-    <button
-      type="button"
-      aria-label="Previous"
-      className="nav-button prev"
-      onClick={onClick}
-      style={{ ...style, left: -40, right: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 45, height: 45 }}
-    >
-      <ChevronLeft size={18} />
-    </button>
-  );
-
-  const NextArrow = ({ className, style, onClick }) => (
-    <button
-      type="button"
-      aria-label="Next"
-      className="nav-button next"
-      onClick={onClick}
-      style={{ ...style, right: -40, left: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 45, height: 45 }}
-    >
-      <ChevronRight size={18} />
-    </button>
-  );
+  const goPrev = useCallback(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+    el.scrollBy({ left: -Math.round(el.clientWidth * 0.86), behavior: 'smooth' });
+  }, []);
 
   return (
-    <section id="WebsiteProjects" className="py-16">
+    <section id="WebsiteProjects" className="portfolio-style-section pt-16 pb-0">
       <style>{`
-        .website-projects-slider .slick-dots {
-          position: static;
-          width: 100%;
-          margin-top: 20px;
-          padding: 0;
-          display: flex !important;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
+        .portfolio-style-section { background: transparent; overflow: hidden; }
+        .website-projects-slider{width:100%;max-width:900px;margin:0 auto;position:relative;background:transparent}
+        .website-projects-slider .slider-wrapper{display:flex;gap:1rem;align-items:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none}
+        .website-projects-slider .slider-wrapper::-webkit-scrollbar{display:none}
+        .website-projects-slider .slider-card{flex:0 0 calc((100% - 2rem)/3);max-width:280px;scroll-snap-align:center;border-radius:12px;overflow:hidden;background:transparent;cursor:pointer}
+        .website-projects-slider .project-card{min-height:520px}
+        .website-projects-slider .nav-button{position:absolute;top:50%;transform:translateY(-50%);width:45px;height:45px;border-radius:12px;background:#030014;border:2px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;z-index:10}
+        .website-projects-slider .nav-button.prev{left:10px}
+        .website-projects-slider .nav-button.next{right:10px}
+        .website-projects-slider .showcase-title{font-size:3rem;font-weight:700;margin-bottom:2rem;background:linear-gradient(45deg,#6366f1,#a855f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-align:center}
+        @media (max-width: 1024px){
+          .website-projects-slider .slider-card{flex:0 0 calc((100% - 1rem)/2);max-width:48%}
         }
-        .website-projects-slider .slick-dots li {
-          width: auto;
-          height: auto;
-          margin: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        @media (max-width: 768px){
+          .website-projects-slider .slider-card{flex:0 0 88%;max-width:88%;aspect-ratio:auto}
+          .website-projects-slider .nav-button{display:none}
+          .website-projects-slider{padding-left:8px;padding-right:8px}
+          .website-projects-slider .project-card{min-height:430px}
+          .website-projects-slider .project-image{height:150px}
+          .website-projects-slider .project-title{font-size:1rem}
+          .website-projects-slider .project-description{font-size:.78rem;line-height:1.45}
         }
-        .website-projects-slider .slick-dots li button {
-          padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          line-height: 0;
-        }
-        .website-projects-slider .slick-dots li button:before {
-          content: none;
-        }
-        .website-projects-slider .website-dot {
-          display: block;
-          width: 10px;
-          height: 10px;
-          border-radius: 9999px;
-          background: rgba(255, 255, 255, 0.45);
-          border: 1px solid rgba(255, 255, 255, 0.7);
-          transition: all 0.25s ease;
-        }
-        .website-projects-slider .slick-dots li.slick-active .website-dot {
-          width: 26px;
-          background: linear-gradient(90deg, #6366f1, #a855f7);
-          border-color: transparent;
-          box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+        @media (max-width: 480px){
+          .website-projects-slider .slider-card{flex:0 0 92%;max-width:92%}
+          .website-projects-slider .project-card{min-height:400px;padding:1rem}
+          .website-projects-slider .project-image{height:138px}
         }
       `}</style>
-      <div className="max-w-6xl mx-auto px-6">
-        <h3 className="text-3xl sm:text-4xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-center">Website Projects</h3>
-        <Slider {...settings} className="website-projects-slider" prevArrow={<PrevArrow/>} nextArrow={<NextArrow/>}>
+      <div className="showcase-container px-6 mx-auto max-w-6xl">
+        <div className="text-center mb-0">
+          <h3 className="inline-block text-3xl md:text-5xl font-bold mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7] showcase-title">
+            <span style={{
+              color: '#6366f1',
+              backgroundImage: 'linear-gradient(45deg, #6366f1 10%, #a855f7 93%)',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
+              Website Projects
+            </span>
+          </h3>
+          <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base mt-1">
+            Explore my journey through projects, and technical expertise. Each section represents a milestone in my continuous learning path.
+          </p>
+        </div>
+        <div className="website-projects-slider">
+          {!isMobile && (
+            <>
+              <button type="button" aria-label="Previous" className="nav-button prev" onClick={goPrev}><ChevronLeft size={18} /></button>
+              <button type="button" aria-label="Next" className="nav-button next" onClick={goNext}><ChevronRight size={18} /></button>
+            </>
+          )}
+          <div ref={sliderRef} className="slider-wrapper">
           {projects.map(p => (
-            <div key={p.id} className="px-3">
-              <div className="bg-[#0b0720] rounded-2xl p-6 shadow-lg border border-white/5 h-full flex flex-col justify-between">
+            <div key={p.id} className="slider-card">
+              <div className="project-card bg-[#0b0720] rounded-2xl p-5 sm:p-6 shadow-lg border border-white/5 h-full flex flex-col justify-between min-h-[520px] sm:min-h-[560px]">
                 <div>
                   <div className="rounded-lg overflow-hidden mb-6">
                     {!loadedImages[p.id] && (
-                      <div className="w-full h-44 rounded-lg bg-gradient-to-r from-white/10 via-white/20 to-white/10 bg-[length:200%_100%] animate-pulse" />
+                      <div className="project-image w-full h-44 rounded-lg bg-gradient-to-r from-white/10 via-white/20 to-white/10 bg-[length:200%_100%] animate-pulse" />
                     )}
                     <img
                       src={p.image}
                       alt={p.title}
-                      className={`w-full h-44 object-cover rounded-lg ${loadedImages[p.id] ? 'opacity-100' : 'opacity-0'}`}
+                      className={`project-image w-full h-44 sm:h-56 object-cover rounded-lg ${loadedImages[p.id] ? 'opacity-100' : 'opacity-0'}`}
                       loading="lazy"
                       onLoad={() => handleImageLoaded(p.id)}
                       onError={() => handleImageLoaded(p.id)}
                     />
                   </div>
-                  <h4 className="text-xl font-bold text-white mb-2">{p.title}</h4>
-                  <p className="text-gray-400 text-sm mb-4">{p.description}</p>
+                  <h4 className="project-title text-xl font-bold text-white mb-2">{p.title}</h4>
+                  <p className="project-description text-gray-400 text-sm mb-4 leading-relaxed">{p.description}</p>
                 </div>
 
                 <div className="flex justify-center mt-4">
@@ -188,8 +158,8 @@ const WebsiteProjects = () => {
               </div>
             </div>
           ))}
-        </Slider>
-
+          </div>
+        </div>
       </div>
     </section>
   );

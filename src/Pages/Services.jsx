@@ -134,15 +134,15 @@ const Services = memo(() => {
         </h3>
 
         {/* Change grid to show 2 columns on mobile and desktop */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
           {servicesData.map((service, i) => (
             <div
               key={service.id}
-              className="w-full flex flex-col items-start gap-2 bg-transparent p-3 sm:p-4 rounded-lg"
+              className="w-full flex flex-col justify-between h-full gap-2 bg-transparent p-3 sm:p-4 rounded-lg"
               data-aos="fade-up"
               data-aos-duration={900 + i * 50}
             >
-              <div className="w-full h-[220px] sm:h-[260px] lg:h-[210px] xl:h-[240px] max-w-[320px] sm:max-w-none mx-auto rounded-lg overflow-hidden bg-gradient-to-r from-purple-700 to-indigo-600 shadow-lg border border-white/10 p-1">
+              <div className="w-full h-[180px] sm:h-[220px] lg:h-[210px] xl:h-[240px] max-w-none sm:max-w-[320px] sm:mx-auto rounded-lg overflow-hidden bg-gradient-to-r from-purple-700 to-indigo-600 shadow-lg border border-white/10 p-1">
                 <div className="relative w-full h-full rounded-lg overflow-hidden">
                   {!loadedImages[service.id] && (
                     <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-white/10 via-white/20 to-white/10 bg-[length:200%_100%] animate-pulse" />
