@@ -27,7 +27,6 @@ export const videoSlides = [
       { title: 'Car Delivery', category: 'car-delivery', path: 'car-delivery-1.mp4' },
       { title: 'Concert', category: 'concert', path: 'danika-hod-club.mp4' },
       { title: 'Concert', category: 'concert', path: 'rahul-dit-o-concert.mp4' },
-      { title: 'Events & Weddings', category: 'events-weddings', path: 'wedding-1.mp4' },
       { title: 'Events & Weddings', category: 'events-weddings', path: 'tanisha-nikhil.mp4' },
       { title: 'Events & Weddings', category: 'events-weddings', path: 'wedding-invitation-1.mp4' },
       { title: 'Real Estate', category: 'real-estate', path: 'krishna-real-estate.mp4' },
